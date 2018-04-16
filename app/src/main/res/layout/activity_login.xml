@@ -70,7 +70,8 @@
         android:layout_height="70dp"
         android:layout_marginTop="16dp"
         android:text="@string/action_sign_in_short"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:onClick="signInUser"/>
 
     <Button
         android:layout_width="match_parent"
