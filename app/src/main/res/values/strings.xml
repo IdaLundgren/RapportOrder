@@ -8,4 +8,5 @@
     <string name="error_invalid_password">Lösenordet matchar inte eller är för kort</string>
     <string name="error_field_required">Detta fält är obligatoriskt</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="start_driver_list_header">Dina påbörjade order</string>
 </resources>

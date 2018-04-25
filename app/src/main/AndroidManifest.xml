@@ -20,7 +20,8 @@
             android:name=".view.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.DriverContentMain" />
-        <activity android:name=".view.SupervisorAdminContentMain"></activity>
+        <activity android:name=".view.SupervisorAdminContentMain" />
+        <activity android:name=".view.DriverListDetailActivity"></activity>
     </application>
 
 </manifest>

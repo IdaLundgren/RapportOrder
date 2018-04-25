@@ -3,7 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorAccent">#ff4081</color>
 
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="blue">#3ac7c4</color>
     <color name="light_grey">#969faa</color>
+
+    <color name="RED">#FF0000</color>
+    <color name="BLUE">#0000FF</color>
+    <color name="GREEN">#00FF00</color>
+    <color name="YELLOW">#FFEB3B</color>
 </resources>
