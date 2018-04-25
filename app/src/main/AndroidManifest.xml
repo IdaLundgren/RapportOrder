@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,10 +17,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DriverContentMain" />
-        <activity android:name=".SupervisorAdminContentMain"></activity>
+        <activity android:name=".view.DriverContentMain" />
+        <activity android:name=".view.SupervisorAdminContentMain"></activity>
     </application>
 
 </manifest>

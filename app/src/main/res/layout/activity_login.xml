@@ -12,7 +12,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
+    tools:context=".view.LoginActivity"
     android:gravity="bottom">
 
     <android.support.design.widget.TextInputLayout

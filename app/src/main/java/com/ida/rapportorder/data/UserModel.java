@@ -1,10 +1,6 @@
-package com.ida.rapportorder;
+package com.ida.rapportorder.data;
 
 import java.io.Serializable;
-
-/**
- * Created by Ida on 2018-04-16.
- */
 
 public class UserModel {
     private String firstname;
