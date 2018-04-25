@@ -18,12 +18,9 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:screenOrientation="portrait">
-            ></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".DriverContentMain" />
+        <activity android:name=".SupervisorAdminContentMain"></activity>
     </application>
 
 </manifest>

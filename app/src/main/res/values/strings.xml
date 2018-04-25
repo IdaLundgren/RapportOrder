@@ -4,7 +4,7 @@
     <string name="prompt_password">Lösenord</string>
     <string name="action_sign_in">Logga in eller registrera dig</string>
     <string name="action_sign_in_short">Logga in</string>
-    <string name="error_invalid_email">Denna email adress är inte korrekt</string>
+    <string name="error_invalid_email">Email adressen är inte korrekt</string>
     <string name="error_invalid_password">Lösenordet matchar inte eller är för kort</string>
     <string name="error_field_required">Detta fält är obligatoriskt</string>
     <string name="title_activity_home">HomeActivity</string>
