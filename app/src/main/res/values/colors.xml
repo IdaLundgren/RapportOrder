@@ -6,9 +6,14 @@
     <color name="white">#ffffff</color>
     <color name="blue">#3ac7c4</color>
     <color name="light_grey">#969faa</color>
+    <color name="lbl_start_list_header">#f0f0f0</color>
 
-    <color name="RED">#FF0000</color>
-    <color name="BLUE">#0000FF</color>
-    <color name="GREEN">#00FF00</color>
-    <color name="YELLOW">#FFEB3B</color>
+    <color name="RED">#ff5555</color>
+    <color name="BLUE">#03b7ea</color>
+    <color name="GREEN">#4cd084</color>
+    <color name="YELLOW">#f9b256</color>
+
+    //Text färger
+    <color name="lbl_start_list_header_color">#707070</color>
+
 </resources>
