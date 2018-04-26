@@ -1,6 +1,6 @@
 package com.ida.rapportorder.data;
 
-public class User {
+public class Users {
     private String firstname;
     private String lastname;
     private String cellphone;
@@ -9,7 +9,7 @@ public class User {
     private String role;
     private String team_id;
 
-    public User() {
+    public Users() {
 
     }
 
