@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import com.ida.rapportorder.R;
 
-import org.w3c.dom.Text;
-
-public class DriverListDetailActivity extends AppCompatActivity {
+public class ListDetailActivity extends AppCompatActivity {
     private static final String EXTRA_DATE_AND_TIME = "EXTRA_DATE_AND_TIME";
     private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     private static final String EXTRA_COLOUR_RESOURCES = "EXTRA_COLOUR_RESOURCES";
@@ -23,7 +21,7 @@ public class DriverListDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_list_detail);
+        setContentView(R.layout.activity_list_detail);
         Intent i = getIntent();
         String dateAndTimeExtra = i.getStringExtra(EXTRA_DATE_AND_TIME);
         String message = i.getStringExtra(EXTRA_MESSAGE);

@@ -5,12 +5,12 @@ import com.ida.rapportorder.data.DataSourceInterface;
 import com.ida.rapportorder.data.Orders;
 import com.ida.rapportorder.view.ViewInterface;
 
-public class DriverContentMainController {
+public class ContentMainController {
 
     private ViewInterface view;
     private DataSourceInterface dataSource;
 
-    public DriverContentMainController(ViewInterface view, DataSourceInterface dataSource) {
+    public ContentMainController(ViewInterface view, DataSourceInterface dataSource) {
         this.view = view;
         this.dataSource = dataSource;
 
@@ -23,9 +23,9 @@ public class DriverContentMainController {
     }
     public void onListItemClick(Orders order){
         view.startDetailActivity(
-                order.getDateAndTime(),
-                order.getMessage(),
-                order.getColorResource()
+                order.getCreated(),
+                order.getCustomer(),
+                order.getColor_res()
         );
     }
 }

@@ -13,7 +13,7 @@
     <color name="GREEN">#4cd084</color>
     <color name="YELLOW">#f9b256</color>
 
-    //Text färger
+    <!--Text färger-->
     <color name="lbl_start_list_header_color">#707070</color>
 
 </resources>

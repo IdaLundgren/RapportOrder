@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class FakeDataSource implements DataSourceInterface {
+public class FakeDataSource  {
 
     private static final int SIZE_OF_COLLECTION = 12;
     private Random mRandom;
@@ -26,22 +26,18 @@ public class FakeDataSource implements DataSourceInterface {
     };
 
     private final int [] colours = {
-            //R.drawable.green_drawable,
-            //R.drawable.red_drawable,
-            //R.drawable.blue_drawable,
-            //R.drawable.yellow_drawable
-            R.color.BLUE,
-            R.color.RED,
-            R.color.GREEN,
-            R.color.YELLOW
+            R.drawable.green_drawable,
+            R.drawable.red_drawable,
+            R.drawable.blue_drawable,
+            R.drawable.yellow_drawable
     };
 
     public FakeDataSource() {
         mRandom = new Random();
     }
 
-    @Override
-    public List<Orders> getListOfData() {
+    //@Override
+    /*public List<Orders> getListOfData() {
         ArrayList<Orders> listOfData = new ArrayList<>();
 
         Random random = new Random();
@@ -59,5 +55,5 @@ public class FakeDataSource implements DataSourceInterface {
             listOfData.add(orderItem);
         }
         return listOfData;
-    }
+    }*/
 }

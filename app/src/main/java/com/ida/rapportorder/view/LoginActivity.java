@@ -103,22 +103,10 @@ public class LoginActivity extends AppCompatActivity {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
                                 UserModel newUser = documentSnapshot.toObject(UserModel.class);
-                                if(newUser.getRole().equals("supervisor")){
-                                    Intent intent = new Intent(LoginActivity.this, SupervisorAdminContentMain.class);
-                                    intent.putExtra("userId", mAuth.getCurrentUser().getUid());
-                                    finish();
-                                    startActivity(intent);
-                                }else if(newUser.getRole().equals("driver")){
-                                    Intent intent = new Intent(LoginActivity.this, DriverContentMain.class);
-                                    intent.putExtra("userId", mAuth.getCurrentUser().getUid());
-                                    finish();
-                                    startActivity(intent);
-                                }else if(newUser.getRole().equals("admin")){
-                                    Intent intent = new Intent(LoginActivity.this, SupervisorAdminContentMain.class);
-                                    intent.putExtra("userId", mAuth.getCurrentUser().getUid());
-                                    finish();
-                                    startActivity(intent);
-                                }
+                                Intent intent = new Intent(LoginActivity.this, ContentMain.class);
+                                intent.putExtra("userId", mAuth.getCurrentUser().getUid());
+                                finish();
+                                startActivity(intent);
                             }
                         }
                     });

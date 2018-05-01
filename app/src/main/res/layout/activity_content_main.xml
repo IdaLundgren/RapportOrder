@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ida.rapportorder.view.DriverContentMain">
+    tools:context="com.ida.rapportorder.view.ContentMain">
 
     <View
         android:id="@+id/lbl_start_list_background"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="199dp"
-        android:text="@string/start_driver_list_header"
+        android:text="@string/start_list_header"
         android:textColor="@color/lbl_start_list_header_color"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="161dp" />
@@ -31,7 +31,8 @@
         android:id="@+id/bottom_list_container"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_below="@+id/lbl_start_list_background">
+        android:layout_below="@+id/lbl_start_list_background"
+        android:layout_above="@id/nav_bottom">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rec_list_driver_activity_main"
@@ -40,4 +41,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nav_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"
+        android:background="@color/BLUE" />
 </RelativeLayout>
