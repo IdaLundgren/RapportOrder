@@ -1,16 +1,31 @@
-package com.ida.rapportorder.data;
+package com.ida.rapportorder.model.pojo;
 
-public class Users {
+import com.google.gson.annotations.Expose;
+
+public class User {
+    @Expose
+    private int id;
+    @Expose
     private String firstname;
+    @Expose
     private String lastname;
+    @Expose
     private String cellphone;
+    @Expose
     private String email;
-    private String uid;
+    @Expose
     private String role;
-    private String team_id;
 
-    public Users() {
+    public User() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -45,27 +60,11 @@ public class Users {
         this.email = email;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getTeam_id() {
-        return team_id;
-    }
-
-    public void setTeam_id(String team_id) {
-        this.team_id = team_id;
     }
 }

@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d("RapportOrder", "createUser onComplete: " + task.isSuccessful());
                 if(!task.isSuccessful()){
-                    Log.d("RapportOrder", "Users creation failed");
+                    Log.d("RapportOrder", "User creation failed");
                     showErrorDialog("Registration attempt failed");
                 }else{
                     String user_id = mAuth.getCurrentUser().getUid();

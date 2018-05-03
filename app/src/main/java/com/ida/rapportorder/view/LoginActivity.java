@@ -23,7 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ida.rapportorder.R;
-import com.ida.rapportorder.data.UserModel;
+import com.ida.rapportorder.model.pojo.User;
 
 public class LoginActivity extends AppCompatActivity {
     //UI references
@@ -97,24 +97,10 @@ public class LoginActivity extends AppCompatActivity {
                 if(!task.isSuccessful()){
                     showErrorDialog("Det blev problem när du skulle logga in. Har du skrivit rätt användarnamn och lösenord?");
                 }else{
-                    DocumentReference user = db.collection("users").document(mAuth.getCurrentUser().getUid());
-                    user.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(documentSnapshot.exists()){
-                                UserModel newUser = documentSnapshot.toObject(UserModel.class);
-                                Intent intent = new Intent(LoginActivity.this, ContentMain.class);
-                                intent.putExtra("userId", mAuth.getCurrentUser().getUid());
-                                finish();
-                                startActivity(intent);
-                            }
-                        }
-                    });
-                    /*String userId = mAuth.getCurrentUser().getUid();
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    intent.putExtra("userId", userId);
+                    Intent intent = new Intent(LoginActivity.this, ContentMain.class);
+                    intent.putExtra("userId", mAuth.getCurrentUser().getUid());
                     finish();
-                    startActivity(intent);*/
+                    startActivity(intent);
                 }
             }
         });
