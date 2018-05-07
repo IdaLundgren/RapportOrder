@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ida.rapportorder">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,7 +22,8 @@
             android:name=".view.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.ContentMain" />
-        <activity android:name=".view.ListDetailActivity"></activity>
+        <activity android:name=".view.ListDetailActivity" />
+        <activity android:name=".view.BaseActivity"></activity>
     </application>
 
 </manifest>

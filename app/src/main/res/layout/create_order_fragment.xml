@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:text="Order"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="12dp"
+        android:text="Fyll i alla fält för att skapa en ny order."
+        android:textSize="16sp"
+        android:textColor="@color/light_grey"
+        android:layout_below="@id/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/create_order_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_field"
+            android:drawableLeft="@drawable/ic_person_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Kundens namn"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+        <EditText
+            android:id="@+id/edittxt_select_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_field"
+            android:drawableLeft="@drawable/ic_date_range_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Startdatum"
+            android:inputType="date"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+        <Spinner
+            android:id="@+id/vehicle_dropdown_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_static_field"
+            android:drawableLeft="@drawable/ic_airline_seat_recline_normal_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Förare"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_field"
+            android:drawableLeft="@drawable/ic_attach_money_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Timpris"
+            android:inputType="phone"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_field"
+            android:drawableLeft="@drawable/ic_attach_money_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Extrautrustning timpris"
+            android:inputType="phone"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittxt_field"
+            android:drawableLeft="@drawable/ic_comment_white_18dp"
+            android:drawablePadding="20dp"
+            android:hint="Beskrivning"
+            android:inputType="textAutoComplete"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:textColorHint="@drawable/selector" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_below="@+id/create_order_form"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_create_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/GREEN"
+            android:text="Skapa order"
+            android:textColor="@color/white" />
+
+
+        <Button
+            android:id="@+id/btn_abort_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/RED"
+            android:text="Avbryt"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

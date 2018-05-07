@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ida.rapportorder.R;
 
+import java.sql.Struct;
 import java.util.Date;
 /**
  * POJO
@@ -30,17 +31,21 @@ public class Order {
     @Expose
     private User user;
 
-    @SerializedName("message_to_customer")
-    @Expose
-    private String message_to_customer;
-
     @SerializedName("message_to_employer")
     @Expose
     private String message_to_employer;
 
-    @SerializedName("customer")
+    @SerializedName("price_per_hour")
     @Expose
-    private Customer customer;
+    private double price_per_hour;
+
+    @SerializedName("price_per_extra")
+    @Expose
+    private double price_per_extra;
+
+    @SerializedName("customer_name")
+    @Expose
+    private String customer_name;
 
     @SerializedName("vehicle")
     @Expose
@@ -92,14 +97,6 @@ public class Order {
         this.user = user;
     }
 
-    public String getMessage_to_customer() {
-        return message_to_customer;
-    }
-
-    public void setMessage_to_customer(String message_to_customer) {
-        this.message_to_customer = message_to_customer;
-    }
-
     public String getMessage_to_employer() {
         return message_to_employer;
     }
@@ -108,19 +105,35 @@ public class Order {
         this.message_to_employer = message_to_employer;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public Vehicle getVehicle() {
         return vehicle;
     }
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public double getPrice_per_hour() {
+        return price_per_hour;
+    }
+
+    public void setPrice_per_hour(double price_per_hour) {
+        this.price_per_hour = price_per_hour;
+    }
+
+    public double getPrice_per_extra() {
+        return price_per_extra;
+    }
+
+    public void setPrice_per_extra(double price_per_extra) {
+        this.price_per_extra = price_per_extra;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
     }
 }

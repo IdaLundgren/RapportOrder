@@ -5,10 +5,16 @@ import com.google.gson.annotations.Expose;
 public class Vehicle {
     @Expose
     private int id;
+
     @Expose
     private String name;
+
     @Expose
     private String type;
+
+    @Expose
+    private String added_at;
+
     @Expose
     private String vehicle_nr;
 
@@ -42,5 +48,13 @@ public class Vehicle {
 
     public void setVehicle_nr(String vehicle_nr) {
         this.vehicle_nr = vehicle_nr;
+    }
+
+    public String getAdded_at() {
+        return added_at;
+    }
+
+    public void setAdded_at(String added_at) {
+        this.added_at = added_at;
     }
 }

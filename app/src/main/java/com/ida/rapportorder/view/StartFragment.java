@@ -1,0 +1,139 @@
+package com.ida.rapportorder.view;
+
+
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.ida.rapportorder.R;
+import com.ida.rapportorder.controller.RestManager;
+import com.ida.rapportorder.model.adapter.StartOrderListAdapter;
+import com.ida.rapportorder.model.callback.OrderFetchListener;
+import com.ida.rapportorder.model.pojo.Order;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class StartFragment extends Fragment implements StartOrderListAdapter.OrderClickListener, OrderFetchListener {
+    private static final String EXTRA_DATE_AND_TIME = "EXTRA_DATE_AND_TIME";
+    private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+    private static final String EXTRA_COLOUR_RESOURCES = "EXTRA_COLOUR_RESOURCES";
+
+    private StartOrderListAdapter mStartOrderListAdapter;
+    private List<Order> mListOfData;
+    private LayoutInflater mLayoutInflater;
+    private RecyclerView mRecyclerView;
+    private TextView mTextViewlblHeader;
+    private RestManager mRestManager;
+    private Bundle mBundleRecyclerViewState;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_content_main, container, false);
+        setUpViewAndAdapter(view);
+
+        mTextViewlblHeader = container.findViewById(R.id.lbl_start_list_header);
+        mLayoutInflater = getLayoutInflater();
+        mRestManager = new RestManager();
+        Call<List<Order>> listcall = mRestManager.getOrderFromApi().getAllOrders();
+        listcall.enqueue(new Callback<List<Order>>() {
+            @Override
+            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                if(response.isSuccessful()){
+                    List<Order> orderList = response.body();
+
+                    for (int i = 0; i < orderList.size(); i++) {
+                        Order order = orderList.get(i);
+                        mStartOrderListAdapter.addOrder(order);
+                    }
+                }else{
+                    Log.d("Lista", "funkar inte!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Order>> call, Throwable t) {
+                Log.d("Lista", t.toString());
+            }
+        });
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable("recycler_state", listState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(mBundleRecyclerViewState != null){
+            Parcelable listState = mBundleRecyclerViewState.getParcelable("recycler_state");
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+    }
+
+    private void setUpViewAndAdapter(View v){
+        mRecyclerView = v.findViewById(R.id.rec_list_driver_activity_main);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mStartOrderListAdapter = new StartOrderListAdapter(this);
+        mRecyclerView.setAdapter(mStartOrderListAdapter);
+        DividerItemDecoration dividerItem = new DividerItemDecoration(
+                mRecyclerView.getContext(),
+                layoutManager.getOrientation()
+        );
+
+        dividerItem.setDrawable(ContextCompat.getDrawable(
+                getContext(),
+                R.drawable.divider_grey
+        ));
+
+        mRecyclerView.addItemDecoration(
+                dividerItem
+        );
+    }
+
+    @Override
+    public void onDeliverAllOrders(List<Order> orders) {
+
+    }
+
+    @Override
+    public void onDeliverOrder(Order order) {
+
+    }
+
+    @Override
+    public void onHideDialog() {
+
+    }
+
+    @Override
+    public void onClick(int position) {
+
+    }
+}

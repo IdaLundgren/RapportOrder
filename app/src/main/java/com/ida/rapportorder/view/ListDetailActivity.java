@@ -27,13 +27,5 @@ public class ListDetailActivity extends AppCompatActivity {
         String message = i.getStringExtra(EXTRA_MESSAGE);
         int colorResourcesExtra = i.getIntExtra(EXTRA_COLOUR_RESOURCES, 0);
 
-        mTextViewDateAndTime = findViewById(R.id.lbl_date_and_time_header);
-        mTextViewDateAndTime.setText(dateAndTimeExtra);
-
-        mTextViewMessage = findViewById(R.id.lbl_message_body);
-        mTextViewMessage.setText(message);
-
-        mViewColoredCircle = findViewById(R.id.cont_colored_background);
-        mViewColoredCircle.setBackgroundColor(ContextCompat.getColor(this, colorResourcesExtra));
     }
 }

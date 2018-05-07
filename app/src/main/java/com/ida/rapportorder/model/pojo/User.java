@@ -67,4 +67,10 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getUserSign(){
+        String sign = Character.toString(firstname.charAt(0));
+        sign += Character.toString(lastname.charAt(0));
+        return sign;
+    }
 }

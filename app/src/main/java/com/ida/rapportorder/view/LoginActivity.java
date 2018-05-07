@@ -79,12 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
-    //Executes when the register button is clicked
-    public void registerNewUser (View v){
-        Intent newIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-        finish();
-        startActivity(newIntent);
-    }
     //Attempt to login user
     private void attemptLogin(){
         String email = mEmailView.getText().toString();
@@ -97,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!task.isSuccessful()){
                     showErrorDialog("Det blev problem när du skulle logga in. Har du skrivit rätt användarnamn och lösenord?");
                 }else{
-                    Intent intent = new Intent(LoginActivity.this, ContentMain.class);
+                    Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
                     intent.putExtra("userId", mAuth.getCurrentUser().getUid());
                     finish();
                     startActivity(intent);

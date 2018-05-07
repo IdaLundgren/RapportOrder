@@ -72,14 +72,6 @@
         android:text="@string/action_sign_in_short"
         android:textStyle="bold"
         android:enabled="false"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrera"
-        android:onClick="registerNewUser"
-        android:enabled="false"/>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"

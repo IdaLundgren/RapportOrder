@@ -33,10 +33,14 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
     @Override
     public void onBindViewHolder(StartOrderListAdapter.Holder holder, int position) {
         Order currentItem = mOrders.get(position);
-        String title = currentItem.getCustomer().getName() + " " + currentItem.getVehicle().getVehicle_nr();
+        String title = currentItem.getCustomer_name() + " " + currentItem.getVehicle().getVehicle_nr();
         String created = "Skapad av: " + currentItem.getUser().getFirstname() + " " + currentItem.getUser().getLastname() + ", " + currentItem.getCreated_at();
+        String userSign = currentItem.getUser().getUserSign();
         holder.mViewColoredCircle.setImageResource(
                 R.drawable.blue_drawable
+        );
+        holder.mTextViewSign.setText(
+               userSign
         );
         holder.mTextViewMessage.setText(
                 title
@@ -62,6 +66,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         private TextView mTextViewDateAndTime;
         private TextView mTextViewMessage;
         private ProgressBar mProgressBarLoading;
+        private TextView mTextViewSign;
 
         public Holder(View itemView) {
             super(itemView);
@@ -69,6 +74,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
             mTextViewDateAndTime = itemView.findViewById(R.id.lbl_date_and_time);
             mTextViewMessage = itemView.findViewById(R.id.lbl_message);
             mProgressBarLoading = itemView.findViewById(R.id.pro_load_item_start);
+            mTextViewSign = itemView.findViewById(R.id.lbl_author_sign);
             itemView.setOnClickListener(this);
         }
 
