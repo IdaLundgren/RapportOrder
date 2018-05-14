@@ -57,4 +57,9 @@ public class Vehicle {
     public void setAdded_at(String added_at) {
         this.added_at = added_at;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + vehicle_nr.toString();
+    }
 }

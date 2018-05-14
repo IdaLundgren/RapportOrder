@@ -24,10 +24,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ContentMain extends AppCompatActivity implements StartOrderListAdapter.OrderClickListener, OrderFetchListener {
-    private static final String EXTRA_DATE_AND_TIME = "EXTRA_DATE_AND_TIME";
-    private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
-    private static final String EXTRA_COLOUR_RESOURCES = "EXTRA_COLOUR_RESOURCES";
-
     private StartOrderListAdapter mStartOrderListAdapter;
     private List<Order> mListOfData;
     private LayoutInflater mLayoutInflater;
