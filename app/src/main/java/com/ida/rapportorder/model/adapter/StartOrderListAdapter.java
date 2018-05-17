@@ -16,11 +16,11 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAdapter.Holder> {
-    private final OrderClickListener mListener;
     private List<Order> mOrders;
+    private final ItemClickListener mItemClickListener;
 
-    public StartOrderListAdapter(OrderClickListener listener){
-        mListener = listener;
+    public StartOrderListAdapter(ItemClickListener itemClickListener){
+        mItemClickListener = itemClickListener;
         mOrders = new ArrayList<>();
     }
 
@@ -61,6 +61,10 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         notifyDataSetChanged();
     }
 
+    public Order getSelectedOrder(int position) {
+        return mOrders.get(position);
+    }
+
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CircleImageView mViewColoredCircle;
         private TextView mTextViewDateAndTime;
@@ -80,11 +84,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
 
         @Override
         public void onClick(View v) {
-            mListener.onClick(getLayoutPosition());
+            mItemClickListener.onClick(getLayoutPosition());
         }
-    }
-
-    public interface OrderClickListener {
-        void onClick(int position);
     }
 }

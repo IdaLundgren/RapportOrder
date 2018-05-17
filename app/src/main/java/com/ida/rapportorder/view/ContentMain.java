@@ -9,12 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ida.rapportorder.R;
 import com.ida.rapportorder.controller.RestManager;
+import com.ida.rapportorder.model.adapter.ItemClickListener;
 import com.ida.rapportorder.model.adapter.StartOrderListAdapter;
-import com.ida.rapportorder.model.callback.OrderFetchListener;
 import com.ida.rapportorder.model.pojo.Order;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ContentMain extends AppCompatActivity implements StartOrderListAdapter.OrderClickListener, OrderFetchListener {
+public class ContentMain extends AppCompatActivity implements ItemClickListener{
     private StartOrderListAdapter mStartOrderListAdapter;
     private List<Order> mListOfData;
     private LayoutInflater mLayoutInflater;
@@ -51,7 +50,7 @@ public class ContentMain extends AppCompatActivity implements StartOrderListAdap
                         mStartOrderListAdapter.addOrder(order);
                     }
                 }else{
-                    Log.d("Lista", "funkar inte!");
+                    Log.d("Lista", "funkar inte!" + response.errorBody());
                 }
             }
 
@@ -84,21 +83,8 @@ public class ContentMain extends AppCompatActivity implements StartOrderListAdap
 
     @Override
     public void onClick(int position) {
-
-    }
-
-    @Override
-    public void onDeliverAllOrders(List<Order> orders) {
-
-    }
-
-    @Override
-    public void onDeliverOrder(Order order) {
-
-    }
-
-    @Override
-    public void onHideDialog() {
+        Order selectedOrder = mStartOrderListAdapter.getSelectedOrder(position);
+        int orderId = selectedOrder.getId();
 
     }
 }

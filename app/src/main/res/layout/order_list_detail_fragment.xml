@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_order_list_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Orderdetaljer"
+        android:textAlignment="center"
+        app:titleTextColor="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/rel_expandable_customer_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginBottom="1dp"
+        android:background="#eeeeee"
+        android:layout_below="@+id/toolbar_order_list_detail">
+
+        <RelativeLayout
+            android:id="@+id/order_list_detail_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            >
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtview_order_list_customer_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/order_list_detail_button"
+            android:layout_toRightOf="@+id/icon_header_customer"
+            android:padding="8dp"
+            android:textSize="20sp"
+            tools:text="Skellefteå Kommun 5532" />
+
+        <RelativeLayout
+            android:id="@+id/icon_header_customer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            >
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_assignment_ind_black_24dp"
+                />
+        </RelativeLayout>
+
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/FUNKA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_list_detail_button"
+            app:ael_expanded="false"
+            app:ael_duration="500"
+            app:ael_interpolator="accelerateDecelerate"
+            app:ael_orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_customer"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Kund" />
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_customer_nme"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/lbl_order_list_detail_item_customer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    tools:text="Skellefteå Kommun" />
+
+                <TextView
+                    android:id="@+id/lbl_to_vehicle"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lbl_order_list_detail_item_customer"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Fordon" />
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_vehicle"
+                    android:layout_toRightOf="@+id/lbl_to_vehicle"
+                    android:layout_below="@+id/lbl_order_list_detail_item_customer_nme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    tools:text="L60H 5532" />
+
+
+                <TextView
+                    android:id="@+id/lbl_to_driver"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lbl_to_vehicle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Förare" />
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_driver"
+                    android:layout_toRightOf="@+id/lbl_to_driver"
+                    android:layout_below="@+id/lbl_order_list_detail_item_vehicle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    tools:text="David Lundgren" />
+
+                <TextView
+                    android:id="@+id/lbl_detail_item_created"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lbl_to_driver"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Startdatum" />
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_created"
+                    android:layout_toRightOf="@+id/lbl_detail_item_created"
+                    android:layout_below="@+id/lbl_order_list_detail_item_driver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    tools:text="2018-05-01" />
+
+                <TextView
+                    android:id="@+id/lbl_to_message"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lbl_detail_item_created"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Meddelande" />
+                <TextView
+                    android:id="@+id/lbl_order_list_detail_item_message"
+                    android:layout_toRightOf="@+id/lbl_to_message"
+                    android:layout_below="@+id/lbl_order_list_detail_item_created"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    tools:text="Snöplogning av område" />
+
+            </RelativeLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/root_layout_list_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel_expandable_customer_info">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_list_detail_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -17,18 +17,9 @@
         android:layout_alignParentTop="true"
         android:background="@color/blue"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:text="Order"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:theme="?attr/actionBarTheme"
+        app:title="Order"
+        app:titleTextColor="@color/white"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -49,6 +40,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:clickable="true"
+        android:backgroundTint="@color/RED"
         app:srcCompat="@drawable/ic_add_white_24dp" />
 
 </RelativeLayout>

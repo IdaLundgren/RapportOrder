@@ -1,27 +1,32 @@
 package com.ida.rapportorder.model.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ida.rapportorder.R;
 
 import java.sql.Struct;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /**
  * POJO
  */
 
-public class Order {
+public class Order implements Parcelable{
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
 
     @SerializedName("active")
     @Expose
-    private int active;
+    private int active = 0;
 
     @SerializedName("approved")
     @Expose
-    private int approved;
+    private int approved = 1;
 
     @SerializedName("created_at")
     @Expose
@@ -51,14 +56,42 @@ public class Order {
     @Expose
     private Vehicle vehicle;
 
+    @SerializedName("start_date")
+    @Expose
+    private String start_date;
+
     public Order() {
     }
 
-    public String getId() {
+    protected Order(Parcel in) {
+        id = in.readInt();
+        active = in.readInt();
+        approved = in.readInt();
+        created_at = in.readString();
+        message_to_employer = in.readString();
+        price_per_hour = in.readDouble();
+        price_per_extra = in.readDouble();
+        customer_name = in.readString();
+        start_date = in.readString();
+    }
+
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel in) {
+            return new Order(in);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -85,8 +118,10 @@ public class Order {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public String getSetCreatedDate(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date).toString();
     }
 
     public User getUser() {
@@ -135,5 +170,25 @@ public class Order {
 
     public void setCustomer_name(String customer_name) {
         this.customer_name = customer_name;
+    }
+
+    public String getStart_date() {
+        String str = start_date;
+        String[] splited = str.split("\\s+");
+        start_date = splited[0];
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
     }
 }

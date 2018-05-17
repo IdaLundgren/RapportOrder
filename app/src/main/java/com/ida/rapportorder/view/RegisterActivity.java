@@ -17,9 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.ida.rapportorder.R;
 
 import java.util.HashMap;
@@ -42,10 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mConfirmPasswordView;
     private EditText mUserRoleView;
 
-    //Firebase instance variables
-    private FirebaseAuth mAuth;
 
-    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
     }
     private boolean isEmailValid(String email){
         return email.contains("@");
@@ -84,20 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void createFireBaseUser(){
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d("RapportOrder", "createUser onComplete: " + task.isSuccessful());
-                if(!task.isSuccessful()){
-                    Log.d("RapportOrder", "User creation failed");
-                    showErrorDialog("Registration attempt failed");
-                }else{
-                    String user_id = mAuth.getCurrentUser().getUid();
-                    createUser(user_id);
-                }
-            }
-        });
     }
     private void createUser(String uid){
         String firstname = mFirstnameView.getText().toString();
@@ -118,19 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         newUser.put("roles", newRole);
 
-        db.collection("users").document(uid).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(RegisterActivity.this, "Användare registrerad", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegisterActivity.this, "ERROR" +e.toString(),
-                        Toast.LENGTH_SHORT).show();
-                Log.d("RapportOrder", e.toString());
-            }
-        });
     }
     //Executes when registrera button is pressed
     public void signUp(View v){

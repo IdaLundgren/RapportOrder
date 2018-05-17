@@ -17,11 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.ida.rapportorder.R;
 import com.ida.rapportorder.model.pojo.User;
 
@@ -32,8 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button mLoginButton;
 
     //Firebase instances
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton = findViewById(R.id.login_sign_in_button);
         mEmailView.addTextChangedListener(loginTextWatcher);
         mPasswordView.addTextChangedListener(loginTextWatcher);
-
-        //Init firebase
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
     }
     private TextWatcher loginTextWatcher = new TextWatcher(){
 
@@ -84,20 +73,11 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         Toast.makeText(getApplicationContext(), "Du loggas in...", Toast.LENGTH_SHORT).show();
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d("RapportOrder", "signInWithEmailAndPassword() onComplete " + task.isSuccessful());
-                if(!task.isSuccessful()){
-                    showErrorDialog("Det blev problem när du skulle logga in. Har du skrivit rätt användarnamn och lösenord?");
-                }else{
-                    Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
-                    intent.putExtra("userId", mAuth.getCurrentUser().getUid());
-                    finish();
-                    startActivity(intent);
-                }
-            }
-        });
+
+        Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+        intent.putExtra("userId", email);
+        finish();
+        startActivity(intent);
     }
     //Shows error when login fails
     private void showErrorDialog(String message){

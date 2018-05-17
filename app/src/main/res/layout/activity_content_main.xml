@@ -45,8 +45,7 @@
         android:id="@+id/bottom_list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lbl_start_list_background"
-        android:layout_above="@id/nav_bottom">
+        android:layout_below="@+id/lbl_start_list_background">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rec_list_driver_activity_main"

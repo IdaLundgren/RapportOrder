@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.ida.rapportorder.R;
 import com.ida.rapportorder.controller.RestManager;
+import com.ida.rapportorder.model.adapter.ItemClickListener;
 import com.ida.rapportorder.model.adapter.StartOrderListAdapter;
 import com.ida.rapportorder.model.callback.OrderFetchListener;
 import com.ida.rapportorder.model.pojo.Order;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StartFragment extends Fragment implements StartOrderListAdapter.OrderClickListener, OrderFetchListener {
+public class StartFragment extends Fragment implements ItemClickListener {
     private static final String EXTRA_DATE_AND_TIME = "EXTRA_DATE_AND_TIME";
     private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     private static final String EXTRA_COLOUR_RESOURCES = "EXTRA_COLOUR_RESOURCES";
@@ -118,22 +119,18 @@ public class StartFragment extends Fragment implements StartOrderListAdapter.Ord
     }
 
     @Override
-    public void onDeliverAllOrders(List<Order> orders) {
-
-    }
-
-    @Override
-    public void onDeliverOrder(Order order) {
-
-    }
-
-    @Override
-    public void onHideDialog() {
-
-    }
-
-    @Override
     public void onClick(int position) {
-
+        Order selectedOrder = mStartOrderListAdapter.getSelectedOrder(position);
+        int orderId = selectedOrder.getId();
+        Bundle bundle = new Bundle();
+        //bundle.putInt("orderId", orderId);
+        bundle.putParcelable("order", selectedOrder);
+        Fragment startDetailFragment = new StartDetailFragment();
+        startDetailFragment.setArguments(bundle);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.base_container, startDetailFragment)
+                .commit();
     }
 }
