@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.ida.rapportorder.R;
+import com.ida.rapportorder.model.pojo.IconDrawable;
 import com.ida.rapportorder.model.pojo.Order;
 import com.ida.rapportorder.model.pojo.OrderRow;
 
@@ -38,11 +39,18 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         OrderRow orderRow = mOrderRowsList.get(position);
+        IconDrawable iconDrawable = new IconDrawable();
+        holder.mViewLeftImage.setBackgroundResource(
+                iconDrawable.getOrderRowDrawable(orderRow.getDayOfWeek())
+        );
         holder.mTextViewDateDetail.setText(
-                "12"
+                orderRow.getShortDate()
+        );
+        holder.mTextViewMonth.setText(
+                orderRow.getShortMonthName()
         );
         holder.mTextViewDayDetail.setText(
-                "Månd"
+                orderRow.getShortdayName()
         );
         holder.mTextViewDesc.setText(
                 orderRow.getComment()
@@ -66,6 +74,7 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
         private TextView mTextViewDayDetail;
         private TextView mTextViewDesc;
         private TextView mTextViewTime;
+        private TextView mTextViewMonth;
         private View mViewLeftImage;
         private View mViewVerticalDivider;
         private View mViewIconClock;
@@ -79,6 +88,7 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
             mViewLeftImage = itemView.findViewById(R.id.list_decor_left);
             mViewVerticalDivider = itemView.findViewById(R.id.order_list_detail_item_divider);
             mViewIconClock = itemView.findViewById(R.id.icon_order_list_item_clock);
+            mTextViewMonth = itemView.findViewById(R.id.lbl_date_month);
             itemView.setOnClickListener(this);
         }
 

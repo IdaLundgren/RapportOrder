@@ -7,34 +7,51 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ida.rapportorder.R;
+import com.ida.rapportorder.model.pojo.User;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 public class BaseActivity extends AppCompatActivity {
-    private String mUserId;
+    private User mUserLoggedIn;
+    private BottomNavigationView mBottomNavigationView;
+    private static final String KEY_USER = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
+        mBottomNavigationView = findViewById(R.id.nav_bottom);
         BottomNavigationView bottomNav = findViewById(R.id.nav_bottom);
+        mUserLoggedIn = new User();
+        mUserLoggedIn = getIntent().getExtras().getParcelable(KEY_USER);
         bottomNav.setOnNavigationItemSelectedListener(mNavigationItemSelectedListener);
-        Intent intent = getIntent();
-        mUserId = intent.getStringExtra("userId");
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.base_container, new StartFragment())
                 .commit();
 
-
+        KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if(isOpen){
+                    mBottomNavigationView.setVisibility(View.GONE);
+                }else{
+                    mBottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             Bundle bundle = new Bundle();
-            bundle.putString("userId", mUserId);
+            bundle.putParcelable(KEY_USER, mUserLoggedIn);
             Fragment selectedFragment = null;
 
             switch(item.getItemId()){

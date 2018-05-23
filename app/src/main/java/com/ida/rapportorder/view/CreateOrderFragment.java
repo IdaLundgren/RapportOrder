@@ -18,6 +18,7 @@ import com.ida.rapportorder.R;
 import com.ida.rapportorder.controller.RestManager;
 import com.ida.rapportorder.model.pojo.Order;
 import com.ida.rapportorder.model.pojo.Result;
+import com.ida.rapportorder.model.pojo.User;
 import com.ida.rapportorder.model.pojo.Vehicle;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
@@ -44,6 +45,10 @@ public class CreateOrderFragment extends Fragment {
     private List<Vehicle> mVehiclesList;
     private BetterSpinner mBetterSpinner;
     private Toolbar mToolbar;
+    private User mUserLoggedIn;
+
+    //Const
+    private static final String KEY_USER = "user";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,7 +66,13 @@ public class CreateOrderFragment extends Fragment {
         mRestManager = new RestManager();
         mToolbar = view.findViewById(R.id.toolbar_create_order);
 
+        mUserLoggedIn = new User();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            mUserLoggedIn = bundle.getParcelable(KEY_USER);
+        }
 
+        mTextViewCreated_By.setText(mUserLoggedIn.getFirstname() + " " + mUserLoggedIn.getLastname());
         Call<List<Vehicle>> vehicleCall = mRestManager.getOrderFromApi().getAllVehicles();
         vehicleCall.enqueue(new Callback<List<Vehicle>>() {
             @Override
@@ -86,6 +97,7 @@ public class CreateOrderFragment extends Fragment {
 
         ArrayAdapter<Vehicle> arrayAdapter = new ArrayAdapter<Vehicle>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mVehiclesList);
         mBetterSpinner.setAdapter(arrayAdapter);
+
         //Knappar
         mButtonAddOrder = view.findViewById(R.id.btn_create_order);
         mButtonAddOrder.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +107,7 @@ public class CreateOrderFragment extends Fragment {
                 Date date = new Date();
                 String created_at = dateFormat.format(date).toString();
                 String start_date = mTextViewCreated_At.getText().toString();
-                String uid = mTextViewCreated_By.getText().toString();
+                String uid = String.valueOf(mUserLoggedIn.getId());
                 String message_to_employer = mTextViewMessage_To_Employer.getText().toString();
                 String price_per_hour = mTextViewPrice_Per_hour.getText().toString();
                 String price_per_extra = mTextViewPrice_Per_Extra.getText().toString();
@@ -109,27 +121,31 @@ public class CreateOrderFragment extends Fragment {
                         vid = String.valueOf(vehicle.getId());
                     }
                 }
-                Call<Result> call = mRestManager.getOrderFromApi().insertOrder(created_at, uid,message_to_employer,price_per_hour,price_per_extra,customer_name,vid,start_date);
+                if(created_at.isEmpty() || start_date.isEmpty()){
 
-                call.enqueue(new Callback<Result>() {
-                    @Override
-                    public void onResponse(Call<Result> call, Response<Result> response) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        if(!response.body().getError()){
-                            getActivity()
-                                    .getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.base_container, new OrderFragment())
-                                    .commit();
+                }else {
+                    Call<Result> call = mRestManager.getOrderFromApi().insertOrder(created_at, uid,message_to_employer,price_per_hour,price_per_extra,customer_name,vid,start_date);
+
+                    call.enqueue(new Callback<Result>() {
+                        @Override
+                        public void onResponse(Call<Result> call, Response<Result> response) {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            if(!response.body().getError()){
+                                getActivity()
+                                        .getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.base_container, new OrderFragment())
+                                        .commit();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Result> call, Throwable t) {
-                        Log.d("Skapa", "onFailure: " +  t.getMessage());
-                        Toast.makeText(getActivity(),"Något gick fel! DEt gick inte att skapa din order.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Result> call, Throwable t) {
+                            Log.d("Skapa", "onFailure: " +  t.getMessage());
+                            Toast.makeText(getActivity(),"Något gick fel! Det gick inte att skapa din order.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
         return view;

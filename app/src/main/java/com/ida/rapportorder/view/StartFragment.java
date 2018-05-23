@@ -4,6 +4,7 @@ package com.ida.rapportorder.view;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -40,6 +41,7 @@ public class StartFragment extends Fragment implements ItemClickListener {
     private TextView mTextViewlblHeader;
     private RestManager mRestManager;
     private Bundle mBundleRecyclerViewState;
+    private FloatingActionButton mFloatingActionButton;
 
 
     @Nullable
@@ -48,6 +50,17 @@ public class StartFragment extends Fragment implements ItemClickListener {
         View view = inflater.inflate(R.layout.activity_content_main, container, false);
         setUpViewAndAdapter(view);
 
+        mFloatingActionButton = view.findViewById(R.id.floatingActionButton_start_fragment);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.base_container, new CreateOrderFragment())
+                        .commit();
+            }
+        });
         mTextViewlblHeader = container.findViewById(R.id.lbl_start_list_header);
         mLayoutInflater = getLayoutInflater();
         mRestManager = new RestManager();
@@ -121,9 +134,7 @@ public class StartFragment extends Fragment implements ItemClickListener {
     @Override
     public void onClick(int position) {
         Order selectedOrder = mStartOrderListAdapter.getSelectedOrder(position);
-        int orderId = selectedOrder.getId();
         Bundle bundle = new Bundle();
-        //bundle.putInt("orderId", orderId);
         bundle.putParcelable("order", selectedOrder);
         Fragment startDetailFragment = new StartDetailFragment();
         startDetailFragment.setArguments(bundle);

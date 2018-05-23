@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,15 +19,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.ida.rapportorder.R;
+import com.ida.rapportorder.controller.RestManager;
+import com.ida.rapportorder.model.pojo.Result;
 import com.ida.rapportorder.model.pojo.User;
+
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     //UI references
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private Button mLoginButton;
+    private RestManager mRestManager;
 
-    //Firebase instances
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton = findViewById(R.id.login_sign_in_button);
         mEmailView.addTextChangedListener(loginTextWatcher);
         mPasswordView.addTextChangedListener(loginTextWatcher);
+
+        //Api
+        mRestManager = new RestManager();
     }
     private TextWatcher loginTextWatcher = new TextWatcher(){
 
@@ -70,14 +79,44 @@ public class LoginActivity extends AppCompatActivity {
     };
     //Attempt to login user
     private void attemptLogin(){
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        Toast.makeText(getApplicationContext(), "Du loggas in...", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
-        intent.putExtra("userId", email);
-        finish();
-        startActivity(intent);
+
+        retrofit2.Call<Result> call =  mRestManager.getOrderFromApi().loginUser(email, password);
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
+                if(response.isSuccessful()){
+                    if(response.body() == null){
+                        Toast.makeText(getApplicationContext(), "Något gick fel! Testa starta om appen!", Toast.LENGTH_LONG).show();
+                    }else {
+                        if(!response.body().getError()){
+                            Toast.makeText(getApplicationContext(), "Du loggas in...", Toast.LENGTH_SHORT).show();
+                            User user = new User();
+                            user = response.body().getUser();
+                            Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+                            intent.putExtra("user", user);
+                            finish();
+                            startActivity(intent);
+                        }
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Ogiltigt email eller lösenord", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
+                Log.d("Skapa", "onFailure: " +  t.getMessage());
+                Toast.makeText(getApplicationContext(),"Något gick fel! Det gick inte logga in!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
     }
     //Shows error when login fails
     private void showErrorDialog(String message){

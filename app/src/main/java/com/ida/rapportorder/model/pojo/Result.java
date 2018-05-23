@@ -13,7 +13,12 @@ public class Result {
     @Expose
     private String message;
 
+    @SerializedName("user")
+    @Expose
+    private User user;
+
     public Result() {
+        user = new User();
     }
 
     public Boolean getError() {
@@ -22,5 +27,9 @@ public class Result {
 
     public String getMessage() {
         return message;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

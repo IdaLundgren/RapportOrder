@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="88dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <View
         android:id="@+id/list_decor_left"
@@ -10,24 +11,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/RED"/>
+        tools:background="@drawable/blue_drawable"/>
+    <TextView
+        android:id="@+id/lbl_date_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_decor_left"
+        android:textSize="12sp"
+        android:text="Maj"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/lbl_date_list_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/list_decor_left"
-        android:textSize="20dp"
-        android:text="12"
+        android:layout_below="@+id/lbl_date_month"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_toRightOf="@+id/list_decor_left"
+        android:text="12"
+        android:textSize="16sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/lbl_date_day_list_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/list_decor_left"
         android:layout_below="@+id/lbl_date_list_detail"
-        android:textSize="16dp"
+        android:textSize="12sp"
         android:text="Tors"
         android:layout_marginLeft="20dp"/>
 
@@ -35,9 +46,9 @@
         android:id="@+id/order_list_detail_item_divider"
         android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/lbl_date_day_list_detail"
+        android:layout_toRightOf="@+id/list_decor_left"
         android:background="@color/list_divider_grey"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="60dp"/>
 
     <TextView
         android:id="@+id/lbl_order_list_detial_item_desc"
@@ -48,7 +59,7 @@
         android:layout_marginLeft="20dp"
         android:textSize="16dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="16dp"/>
     <View
         android:id="@+id/icon_order_list_item_clock"
         android:layout_width="18dp"
@@ -57,7 +68,7 @@
         android:layout_toRightOf="@id/order_list_detail_item_divider"
         android:layout_below="@+id/lbl_order_list_detial_item_desc"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="7dp"
         />
     <TextView
         android:id="@+id/lbl_order_list_detial_item_time"
@@ -68,5 +79,5 @@
         android:layout_marginLeft="10dp"
         android:layout_below="@id/lbl_order_list_detial_item_desc"
         android:textSize="12dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="7dp"/>
 </RelativeLayout>

@@ -40,4 +40,25 @@ public interface OrderService {
 
     @GET("orderrows/{id}")
     Call<List<OrderRow>> getOrderRows(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("login")
+    Call<Result> loginUser(
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("create_orderrow")
+    Call<Result> inserOrderrow(
+            @Field("startdate") String startdate,
+            @Field("enddate") String enddate,
+            @Field("starttime") String starttime,
+            @Field("endtime") String endtime,
+            @Field("lunch_break_in_min") String lunchBreak,
+            @Field("comment") String comment,
+            @Field("extra_equipment") String extra,
+            @Field("extra_equipment_in_min") String extra_time,
+            @Field("order_id") String order_id
+    );
 }

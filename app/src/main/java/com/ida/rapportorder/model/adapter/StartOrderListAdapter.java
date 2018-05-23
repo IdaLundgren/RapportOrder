@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ida.rapportorder.R;
+import com.ida.rapportorder.model.pojo.IconDrawable;
 import com.ida.rapportorder.model.pojo.Order;
 
 import java.util.ArrayList;
@@ -36,8 +37,11 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         String title = currentItem.getCustomer_name() + " " + currentItem.getVehicle().getVehicle_nr();
         String created = "Skapad av: " + currentItem.getUser().getFirstname() + " " + currentItem.getUser().getLastname() + ", " + currentItem.getCreated_at();
         String userSign = currentItem.getUser().getUserSign();
+
+
+        IconDrawable avatarDrawable = new IconDrawable();
         holder.mViewColoredCircle.setImageResource(
-                R.drawable.blue_drawable
+                avatarDrawable.getUserAvatar(currentItem.getUser())
         );
         holder.mTextViewSign.setText(
                userSign

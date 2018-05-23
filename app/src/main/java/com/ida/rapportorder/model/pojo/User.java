@@ -1,8 +1,13 @@
 package com.ida.rapportorder.model.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Parcelable{
     @Expose
     private int id;
     @Expose
@@ -19,6 +24,27 @@ public class User {
     public User() {
 
     }
+
+    protected User(Parcel in) {
+        id = in.readInt();
+        firstname = in.readString();
+        lastname = in.readString();
+        cellphone = in.readString();
+        email = in.readString();
+        role = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -72,5 +98,20 @@ public class User {
         String sign = Character.toString(firstname.charAt(0));
         sign += Character.toString(lastname.charAt(0));
         return sign;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(firstname);
+        dest.writeString(lastname);
+        dest.writeString(cellphone);
+        dest.writeString(email);
+        dest.writeString(role);
     }
 }
