@@ -24,16 +24,19 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
         mBottomNavigationView = findViewById(R.id.nav_bottom);
         BottomNavigationView bottomNav = findViewById(R.id.nav_bottom);
         mUserLoggedIn = new User();
         mUserLoggedIn = getIntent().getExtras().getParcelable(KEY_USER);
         bottomNav.setOnNavigationItemSelectedListener(mNavigationItemSelectedListener);
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(KEY_USER, mUserLoggedIn);
+        Fragment startfragment = new StartFragment();
+        startfragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.base_container, new StartFragment())
+                .replace(R.id.base_container, startfragment)
                 .commit();
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
@@ -47,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

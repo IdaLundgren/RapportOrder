@@ -24,10 +24,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetailAdapter.Holder> {
     private List<OrderRow> mOrderRowsList;
+    private ItemClickListener mListener;
     SparseBooleanArray expandState = new SparseBooleanArray();
 
-    public StartListDetailAdapter() {
+    public StartListDetailAdapter(ItemClickListener listener) {
         mOrderRowsList = new ArrayList<>();
+        mListener = listener;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
                 orderRow.getComment()
         );
         holder.mTextViewTime.setText(
-                "Utförd tid: 9 timmar"
+                "Tid: " + orderRow.getStarttime() + " - " + orderRow.getEndtime()
         );
     }
 
@@ -68,6 +70,9 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
     public void addOrderRow(OrderRow orderRow){
         mOrderRowsList.add(orderRow);
         notifyDataSetChanged();
+    }
+    public OrderRow getSelectedOrderrow(int position) {
+        return mOrderRowsList.get(position);
     }
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextViewDateDetail;
@@ -94,7 +99,7 @@ public class StartListDetailAdapter extends RecyclerView.Adapter<StartListDetail
 
         @Override
         public void onClick(View v) {
-
+            mListener.onClick(getLayoutPosition());
         }
     }
 }

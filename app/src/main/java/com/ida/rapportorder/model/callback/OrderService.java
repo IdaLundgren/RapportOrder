@@ -59,6 +59,7 @@ public interface OrderService {
             @Field("comment") String comment,
             @Field("extra_equipment") String extra,
             @Field("extra_equipment_in_min") String extra_time,
-            @Field("order_id") String order_id
+            @Field("order_id") String order_id,
+            @Field("driver_id") String driver_id
     );
 }

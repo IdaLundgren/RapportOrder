@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ida.rapportorder.R;
@@ -35,7 +36,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
     public void onBindViewHolder(StartOrderListAdapter.Holder holder, int position) {
         Order currentItem = mOrders.get(position);
         String title = currentItem.getCustomer_name() + " " + currentItem.getVehicle().getVehicle_nr();
-        String created = "Skapad av: " + currentItem.getUser().getFirstname() + " " + currentItem.getUser().getLastname() + ", " + currentItem.getCreated_at();
+        String created = "Skapad av: " + currentItem.getUser().getFirstname() + " " + currentItem.getUser().getLastname() + ", Månad: " + currentItem.getMonth();
         String userSign = currentItem.getUser().getUserSign();
 
 
@@ -52,7 +53,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         holder.mTextViewDateAndTime.setText(
                 created
         );
-        holder.mProgressBarLoading.setVisibility(View.INVISIBLE);
+        //holder.mProgressBarLoading.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -65,6 +66,14 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         notifyDataSetChanged();
     }
 
+    public void removeOrder(int position){
+        mOrders.remove(position);
+        notifyItemRemoved(position);
+    }
+    public void restoreOrder(Order order, int position){
+        mOrders.add(position,order);
+        notifyItemInserted(position);
+    }
     public Order getSelectedOrder(int position) {
         return mOrders.get(position);
     }
@@ -73,7 +82,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
         private CircleImageView mViewColoredCircle;
         private TextView mTextViewDateAndTime;
         private TextView mTextViewMessage;
-        private ProgressBar mProgressBarLoading;
+        //private ProgressBar mProgressBarLoading;
         private TextView mTextViewSign;
 
         public Holder(View itemView) {
@@ -81,7 +90,7 @@ public class StartOrderListAdapter extends RecyclerView.Adapter<StartOrderListAd
             mViewColoredCircle = itemView.findViewById(R.id.imv_list_item_circle);
             mTextViewDateAndTime = itemView.findViewById(R.id.lbl_date_and_time);
             mTextViewMessage = itemView.findViewById(R.id.lbl_message);
-            mProgressBarLoading = itemView.findViewById(R.id.pro_load_item_start);
+            //mProgressBarLoading = itemView.findViewById(R.id.pro_load_item_start);
             mTextViewSign = itemView.findViewById(R.id.lbl_author_sign);
             itemView.setOnClickListener(this);
         }

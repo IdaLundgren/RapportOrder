@@ -42,28 +42,39 @@
             android:textSize="16sp"
             android:textColor="@color/light_grey"
             />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
 
         <EditText
             android:id="@+id/edittxt_customer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
             android:drawableLeft="@drawable/ic_person_black_24dp"
             android:drawablePadding="10dp"
             android:hint="Kundens namn"
-            android:inputType="textCapWords" />
-
-        <EditText
-            android:id="@+id/edittxt_select_date"
+            android:inputType="textCapWords"
+            />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:drawableLeft="@drawable/ic_date_range_black_24dp"
-            android:drawablePadding="10dp"
-            android:hint="Startdatum"
-            android:inputType="textAutoComplete"
-            android:paddingTop="12dp"
-            android:backgroundTint="@color/light_grey"/>
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <EditText
+                android:id="@+id/edittxt_select_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Startdatum"
+                android:inputType="textAutoComplete"
+                android:paddingTop="12dp"
+                android:backgroundTint="@color/light_grey"
+                android:focusable="false"/>
+        </android.support.design.widget.TextInputLayout>
+
 
         <com.weiwangcn.betterspinner.library.BetterSpinner
             android:id="@+id/vehicle_dropdown_betterspinner"
@@ -74,56 +85,55 @@
             android:drawablePadding="10dp"
             android:hint="Välj ett fordon"
             android:backgroundTint="@color/light_grey"/>
-        <EditText
-            android:id="@+id/edittxt_driver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:drawableLeft="@drawable/ic_airline_seat_recline_normal_black_24dp"
-            android:drawablePadding="10dp"
-            android:hint="Förare"
-            android:inputType="textCapWords"
-            android:backgroundTint="@color/light_grey"
-            android:enabled="false"/>
 
-        <EditText
-            android:id="@+id/edittxt_price_per_hour"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-            android:drawablePadding="10dp"
-            android:hint="Timpris"
-            android:inputType="phone"
-            android:backgroundTint="@color/light_grey" />
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
 
-        <EditText
-            android:id="@+id/edittxt_price_per_extra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-            android:drawablePadding="10dp"
-            android:hint="Extrautrustning timpris"
-            android:inputType="phone"
-            android:backgroundTint="@color/light_grey" />
+            <EditText
+                android:id="@+id/edittxt_price_per_hour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Timpris"
+                android:inputType="phone"
+                android:backgroundTint="@color/light_grey" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edittxt_message_to_employer"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:drawableLeft="@drawable/ic_comment_black_24dp"
-            android:drawablePadding="10dp"
-            android:hint="Beskrivning"
-            android:inputType="textCapSentences"
-            android:backgroundTint="@color/light_grey"/>
-        
-        
-        <TextView
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <EditText
+                android:id="@+id/edittxt_price_per_extra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Extrautrustning timpris"
+                android:inputType="phone"
+                android:backgroundTint="@color/light_grey" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            />
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <EditText
+                android:id="@+id/edittxt_message_to_employer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_comment_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Beskrivning"
+                android:inputType="textCapSentences"
+                android:backgroundTint="@color/light_grey"/>
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:id="@+id/btn_create_order"
             android:layout_width="match_parent"

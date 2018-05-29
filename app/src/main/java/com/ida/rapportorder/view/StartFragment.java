@@ -1,27 +1,34 @@
 package com.ida.rapportorder.view;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ida.rapportorder.R;
 import com.ida.rapportorder.controller.RestManager;
 import com.ida.rapportorder.model.adapter.ItemClickListener;
 import com.ida.rapportorder.model.adapter.StartOrderListAdapter;
-import com.ida.rapportorder.model.callback.OrderFetchListener;
 import com.ida.rapportorder.model.pojo.Order;
+import com.ida.rapportorder.model.pojo.User;
 
 import java.util.List;
 
@@ -42,14 +49,24 @@ public class StartFragment extends Fragment implements ItemClickListener {
     private RestManager mRestManager;
     private Bundle mBundleRecyclerViewState;
     private FloatingActionButton mFloatingActionButton;
+    private RelativeLayout mRelativeLayout;
 
+    private User mUser;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            mUser = bundle.getParcelable("user");
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_content_main, container, false);
         setUpViewAndAdapter(view);
-
         mFloatingActionButton = view.findViewById(R.id.floatingActionButton_start_fragment);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +78,7 @@ public class StartFragment extends Fragment implements ItemClickListener {
                         .commit();
             }
         });
+        mRelativeLayout = view.findViewById(R.id.start_fragment);
         mTextViewlblHeader = container.findViewById(R.id.lbl_start_list_header);
         mLayoutInflater = getLayoutInflater();
         mRestManager = new RestManager();
@@ -70,6 +88,7 @@ public class StartFragment extends Fragment implements ItemClickListener {
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if(response.isSuccessful()){
                     List<Order> orderList = response.body();
+                    mListOfData = response.body();
 
                     for (int i = 0; i < orderList.size(); i++) {
                         Order order = orderList.get(i);
@@ -114,8 +133,10 @@ public class StartFragment extends Fragment implements ItemClickListener {
         mRecyclerView = v.findViewById(R.id.rec_list_driver_activity_main);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mStartOrderListAdapter = new StartOrderListAdapter(this);
         mRecyclerView.setAdapter(mStartOrderListAdapter);
+
         DividerItemDecoration dividerItem = new DividerItemDecoration(
                 mRecyclerView.getContext(),
                 layoutManager.getOrientation()
@@ -136,6 +157,7 @@ public class StartFragment extends Fragment implements ItemClickListener {
         Order selectedOrder = mStartOrderListAdapter.getSelectedOrder(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable("order", selectedOrder);
+        bundle.putParcelable("user", mUser);
         Fragment startDetailFragment = new StartDetailFragment();
         startDetailFragment.setArguments(bundle);
         getActivity()

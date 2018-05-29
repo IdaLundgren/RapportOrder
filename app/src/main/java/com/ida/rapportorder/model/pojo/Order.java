@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ida.rapportorder.R;
 
 import java.sql.Struct;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -183,6 +184,23 @@ public class Order implements Parcelable{
         this.start_date = start_date;
     }
 
+    public String getMonth(){
+        String monthName = "";
+        String[] splited = getStart_date().split("-");
+        String newString = splited[1];
+        int monthNumber = 0;
+        if(newString.startsWith("0")){
+            monthNumber = Integer.parseInt(newString.substring(1)) - 1;
+        }else{
+            monthNumber = Integer.parseInt(newString) - 1;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, monthNumber);
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("MMMM");
+        simpleDateFormat.setCalendar(cal);
+        monthName = simpleDateFormat.format(cal.getTime());
+        return monthName.substring(0, 1).toUpperCase() + monthName.substring(1);
+    }
     @Override
     public int describeContents() {
         return 0;

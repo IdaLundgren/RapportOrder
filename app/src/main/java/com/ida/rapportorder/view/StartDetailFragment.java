@@ -1,7 +1,10 @@
 package com.ida.rapportorder.view;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -12,11 +15,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
+import android.app.AlertDialog.Builder;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.ida.rapportorder.R;
@@ -25,7 +32,10 @@ import com.ida.rapportorder.model.adapter.ItemClickListener;
 import com.ida.rapportorder.model.adapter.StartListDetailAdapter;
 import com.ida.rapportorder.model.pojo.Order;
 import com.ida.rapportorder.model.pojo.OrderRow;
+import com.ida.rapportorder.model.pojo.User;
 import com.ida.rapportorder.viewmodel.StartListDetailViewModel;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +49,8 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
     public TextView mTextViewDriver;
     public TextView mTextViewMessage;
     public RelativeLayout mButton;
+
+    public TextView mTextViewDialogCustomerName;
     public ExpandableRelativeLayout mExpandableLayout;
     private FloatingActionButton mFloatingActionButton;
 
@@ -47,6 +59,7 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
     private LayoutInflater mLayoutInflater;
     private RecyclerView mRecyclerView;
     private RestManager mRestManager;
+    private Toolbar mToolbar;
 
     private List<OrderRow> mOrderRowsList;
 
@@ -55,6 +68,14 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
     private static final String KEY_ORDER = "order";
 
     private Order mOrder;
+    private User mUser;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getBundleParcable();
+    }
 
     @Nullable
     @Override
@@ -62,6 +83,8 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         View view = inflater.inflate(R.layout.order_list_detail_fragment, container, false);
         setUpViewAndAdapter(view);
         mOrder = new Order();
+        mUser = new User();
+
         getBundleParcable();
         toggleCustomerInfo(view);
         setUI(mOrder);
@@ -72,10 +95,15 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Fragment fragment = new CreateWorkDayFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("order", mOrder);
+                bundle.putParcelable("user", mUser);
+                fragment.setArguments(bundle);
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.base_container, new CreateWorkDayFragment())
+                        .replace(R.id.base_container, fragment)
                         .addToBackStack(FRAGMENT_TAG)
                         .commit();
             }
@@ -91,33 +119,14 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
                 }
             }
         });
-        /*Call<List<OrderRow>> listcall = mRestManager.getOrderFromApi().getOrderRows(order.getId());
-        listcall.enqueue(new Callback<List<OrderRow>>() {
-            @Override
-            public void onResponse(Call<List<OrderRow>> call, Response<List<OrderRow>> response) {
-                if(response.isSuccessful()){
-                    List<OrderRow> orderRowList = response.body();
-
-                    for (int i = 0; i < orderRowList.size(); i++) {
-                        OrderRow orderRow = orderRowList.get(i);
-                        mStartListDetailAdapter.addOrderRow(orderRow);
-                    }
-                }else{
-                    Log.d("Lista", "funkar inte!");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<OrderRow>> call, Throwable t) {
-                Log.d("Lista", "funkar inte!" + t.getMessage());
-            }
-        });*/
         return view;
     }
+
     private void getBundleParcable(){
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             mOrder = bundle.getParcelable(KEY_ORDER);
+            mUser = bundle.getParcelable("user");
         }
     }
     private void toggleCustomerInfo(View view){
@@ -133,6 +142,9 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         //Layout
         mExpandableLayout = view.findViewById(R.id.FUNKA);
         mExpandableLayout.collapse();
+
+        //Dialog
+        mTextViewDialogCustomerName = view.findViewById(R.id.dialog_customer_name);
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +168,7 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         mRecyclerView = v.findViewById(R.id.rec_list_detail_fragment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        mStartListDetailAdapter = new StartListDetailAdapter();
+        mStartListDetailAdapter = new StartListDetailAdapter(this);
         mRecyclerView.setAdapter(mStartListDetailAdapter);
         DividerItemDecoration dividerItem = new DividerItemDecoration(
                 mRecyclerView.getContext(),
@@ -175,6 +187,24 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
 
     @Override
     public void onClick(int position) {
+        OrderRow selectedOrderRow = mStartListDetailAdapter.getSelectedOrderrow(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View mView = getLayoutInflater().inflate(R.layout.workday_dialog, null);
+        //Textviews
+        TextView dialogCustomerName = mView.findViewById(R.id.dialog_customer_name);
+        TextView dialogTime = mView.findViewById(R.id.txtview_dialog_vehicle);
+        TextView dialogDate = mView.findViewById(R.id.txtview_dialog_date);
+        TextView dialogDriver = mView.findViewById(R.id.txtview_dialog_driver);
+        TextView dialogComment = mView.findViewById(R.id.txtview_dialog_comment);
 
+        //Dialog
+        dialogCustomerName.setText(selectedOrderRow.getOrder().getCustomer_name());
+        dialogTime.setText(selectedOrderRow.getStarttime() + " - " + selectedOrderRow.getEndtime());
+        dialogDate.setText(selectedOrderRow.getStartdate());
+        dialogDriver.setText(selectedOrderRow.getUser().getFirstname() + " " + selectedOrderRow.getUser().getLastname());
+        dialogComment.setText(selectedOrderRow.getComment());
+        builder.setView(mView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

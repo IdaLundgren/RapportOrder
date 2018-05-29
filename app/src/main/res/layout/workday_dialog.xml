@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/blue">
+
+        <TextView
+            android:id="@+id/dialog_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:text="Skellefteå Kommun" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/lbl_to_dialog_time"
+            android:layout_alignParentLeft="true"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Tid:" />
+        <TextView
+            android:id="@+id/txtview_dialog_vehicle"
+            android:layout_toRightOf="@+id/lbl_to_dialog_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="14sp"
+            tools:text="L60H 5532" />
+        <TextView
+            android:id="@+id/lbl_to_dialog_date"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/lbl_to_dialog_time"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Datum" />
+        <TextView
+            android:id="@+id/txtview_dialog_date"
+            android:layout_toRightOf="@+id/lbl_to_dialog_date"
+            android:layout_below="@+id/txtview_dialog_vehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="14sp"
+            tools:text="2018-05-01" />
+
+
+        <TextView
+            android:id="@+id/lbl_to_dialog_driver"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/lbl_to_dialog_date"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Förare" />
+        <TextView
+            android:id="@+id/txtview_dialog_driver"
+            android:layout_toRightOf="@+id/lbl_to_dialog_driver"
+            android:layout_below="@+id/txtview_dialog_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="14sp"
+            tools:text="David Lundgren" />
+
+
+
+        <TextView
+            android:id="@+id/lbl_to_dialog_comment"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/lbl_to_dialog_driver"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Kommentar" />
+        <TextView
+            android:id="@+id/txtview_dialog_comment"
+            android:layout_toRightOf="@+id/lbl_to_dialog_comment"
+            android:layout_below="@+id/txtview_dialog_driver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="14sp"
+            tools:text="Snöplogning av område" />
+
+    </RelativeLayout>
+
+</LinearLayout>

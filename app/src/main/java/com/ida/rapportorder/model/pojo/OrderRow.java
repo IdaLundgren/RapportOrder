@@ -54,6 +54,10 @@ public class OrderRow implements Parcelable{
     @Expose
     private Order order;
 
+    @SerializedName("user")
+    @Expose
+    private User user;
+
 
     protected OrderRow(Parcel in) {
         id = in.readInt();
@@ -93,11 +97,11 @@ public class OrderRow implements Parcelable{
     }
 
     public String getStarttime() {
-        return starttime;
+        return starttime.substring(0,5);
     }
 
     public String getEndtime() {
-        return endtime;
+        return endtime.substring(0,5);
     }
 
     public int getLunch_break_in_min() {
@@ -120,6 +124,10 @@ public class OrderRow implements Parcelable{
         return order;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getShortDate(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String str = startdate;
@@ -129,9 +137,21 @@ public class OrderRow implements Parcelable{
     }
 
     public String getShortMonthName(){
+        String monthName = "";
+        String[] splited = startdate.split("-");
+        String newString = splited[1];
+        int monthNumber = 0;
+        if(newString.startsWith("0")){
+            monthNumber = Integer.parseInt(newString.substring(1)) - 1;
+        }else{
+            monthNumber = Integer.parseInt(newString) - 1;
+        }
         Calendar cal = Calendar.getInstance();
-        String month =  new SimpleDateFormat("MMM").format(cal.getTime());
-        return month.substring(0, 1).toUpperCase() + month.substring(1);
+        cal.set(Calendar.MONTH, monthNumber);
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("MMM");
+        simpleDateFormat.setCalendar(cal);
+        monthName = simpleDateFormat.format(cal.getTime());
+        return monthName.substring(0, 1).toUpperCase() + monthName.substring(1,3);
     }
     public String getShortdayName() {
         String dayOfWeek = "";
@@ -174,5 +194,6 @@ public class OrderRow implements Parcelable{
         dest.writeInt(extra_equipment);
         dest.writeInt(extra_equipment_in_min);
         dest.writeParcelable(order, flags);
+        dest.writeParcelable(user, flags);
     }
 }

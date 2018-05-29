@@ -1,5 +1,6 @@
 package com.ida.rapportorder.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ import com.weiwangcn.betterspinner.library.BetterSpinner;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import retrofit2.Call;
@@ -35,7 +39,7 @@ import retrofit2.http.Field;
 
 public class CreateOrderFragment extends Fragment {
     private TextView mTextViewCustomerName;
-    private TextView mTextViewCreated_At;
+    private EditText mTextViewCreated_At;
     private TextView mTextViewCreated_By;
     private TextView mTextViewPrice_Per_hour;
     private TextView mTextViewPrice_Per_Extra;
@@ -57,7 +61,6 @@ public class CreateOrderFragment extends Fragment {
 
         mTextViewCustomerName = view.findViewById(R.id.edittxt_customer_name);
         mTextViewCreated_At = view.findViewById(R.id.edittxt_select_date);
-        mTextViewCreated_By = view.findViewById(R.id.edittxt_driver);
         mTextViewPrice_Per_hour = view.findViewById(R.id.edittxt_price_per_hour);
         mTextViewPrice_Per_Extra = view.findViewById(R.id.edittxt_price_per_extra);
         mTextViewMessage_To_Employer = view.findViewById(R.id.edittxt_message_to_employer);
@@ -72,7 +75,6 @@ public class CreateOrderFragment extends Fragment {
             mUserLoggedIn = bundle.getParcelable(KEY_USER);
         }
 
-        mTextViewCreated_By.setText(mUserLoggedIn.getFirstname() + " " + mUserLoggedIn.getLastname());
         Call<List<Vehicle>> vehicleCall = mRestManager.getOrderFromApi().getAllVehicles();
         vehicleCall.enqueue(new Callback<List<Vehicle>>() {
             @Override
@@ -94,7 +96,22 @@ public class CreateOrderFragment extends Fragment {
 
             }
         });
-
+        mTextViewCreated_At.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        setDate(year, month, dayOfMonth,  mTextViewCreated_At);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
         ArrayAdapter<Vehicle> arrayAdapter = new ArrayAdapter<Vehicle>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mVehiclesList);
         mBetterSpinner.setAdapter(arrayAdapter);
 
@@ -114,15 +131,22 @@ public class CreateOrderFragment extends Fragment {
                 String customer_name = mTextViewCustomerName.getText().toString();
                 String va = mBetterSpinner.getText().toString();
                 String vid = "";
-                String[] splited = va.split("\\s+");
-                va = splited[2];
-                for(Vehicle vehicle : mVehiclesList){
-                    if(vehicle.getVehicle_nr().equals(va)){
-                        vid = String.valueOf(vehicle.getId());
+                if(!va.isEmpty()){
+                    String[] splited = va.split("\\s+");
+                    if(splited.length == 3){
+                        va = splited[2];
+                    }else{
+                        va = splited[1];
+                    }
+                    for(Vehicle vehicle : mVehiclesList){
+                        if(vehicle.getVehicle_nr().equals(va)){
+                            vid = String.valueOf(vehicle.getId());
+                        }
                     }
                 }
-                if(created_at.isEmpty() || start_date.isEmpty()){
 
+                if(created_at.isEmpty() || start_date.isEmpty()){
+                    Toast.makeText(getContext(), "Du måste fylla i alla fält", Toast.LENGTH_LONG).show();
                 }else {
                     Call<Result> call = mRestManager.getOrderFromApi().insertOrder(created_at, uid,message_to_employer,price_per_hour,price_per_extra,customer_name,vid,start_date);
 
@@ -136,6 +160,8 @@ public class CreateOrderFragment extends Fragment {
                                         .beginTransaction()
                                         .replace(R.id.base_container, new OrderFragment())
                                         .commit();
+                            }else {
+
                             }
                         }
 
@@ -152,5 +178,13 @@ public class CreateOrderFragment extends Fragment {
     }
     private void attemptToCreateOrder(){
 
+    }
+    public void setDate(int year, int month, int dayOfMonth, EditText field){
+        month += 1;
+        if(month < 10 || dayOfMonth < 10){
+            field.setText(year + "-0" + month + "-0" + dayOfMonth);
+        }else{
+            field.setText(year + "-" + month + "-" + dayOfMonth);
+        }
     }
 }

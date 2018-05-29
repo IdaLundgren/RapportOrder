@@ -19,11 +19,12 @@ public class StartListDetailViewModel extends ViewModel {
     private MutableLiveData<List<OrderRow>> mListMutableLiveDataOrderrows;
 
     public LiveData<List<OrderRow>> getOrderrows(int id){
-        mListMutableLiveDataOrderrows = new MutableLiveData<>();
+
         loadOrderrows(id);
         return mListMutableLiveDataOrderrows;
     }
     public void loadOrderrows(int id){
+        mListMutableLiveDataOrderrows = new MutableLiveData<>();
         RestManager restManager = new RestManager();
         Call<List<OrderRow>> call = restManager.getOrderFromApi().getOrderRows(id);
         call.enqueue(new Callback<List<OrderRow>>() {
@@ -40,7 +41,6 @@ public class StartListDetailViewModel extends ViewModel {
             }
         });
     }
-
     @Override
     protected void onCleared() {
         super.onCleared();
