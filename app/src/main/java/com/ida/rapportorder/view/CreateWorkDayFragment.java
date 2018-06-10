@@ -36,6 +36,8 @@ import com.ida.rapportorder.model.pojo.User;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 
 
@@ -148,8 +150,17 @@ public class CreateWorkDayFragment extends Fragment {
                 String comment = mEditTextComment.getText().toString();
                 String extraBool = "0";
                 String extraMin = mEditTextExtraTime.getText().toString();
+                double d = 0;
+                NumberFormat format = NumberFormat.getInstance();
+                try {
+                    Number number = format.parse(extraMin);
+                    d = number.doubleValue();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-                Call<Result> call = mRestManager.getOrderFromApi().inserOrderrow(startdate, startdate, starttime, endtime, breakMin, comment, extraBool, extraMin, String.valueOf(mOrder.getId()), String.valueOf(mUser.getId()));
+                d = d * 60;
+                Call<Result> call = mRestManager.getOrderFromApi().inserOrderrow(startdate, startdate, starttime, endtime, breakMin, comment, extraBool, String.valueOf(d), String.valueOf(mOrder.getId()), String.valueOf(mUser.getId()));
                 call.enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {

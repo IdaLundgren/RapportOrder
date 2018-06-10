@@ -12,13 +12,14 @@
         android:layout_height="wrap_content"
         android:background="@color/blue"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Orderdetaljer"
         android:textAlignment="center"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        android:theme="@style/GalaxyZooThemeToolbarDarkOverflow"
+        app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"/>
     <View
         android:id="@+id/toolbar_shadow"
         android:layout_width="match_parent"
@@ -185,7 +186,7 @@
                     android:padding="8dp"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:text="Meddelande" />
+                    android:text="Beskrivning" />
                 <TextView
                     android:id="@+id/lbl_order_list_detail_item_message"
                     android:layout_toRightOf="@+id/lbl_to_message"
@@ -221,8 +222,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:clickable="true"
         android:backgroundTint="@color/RED"
         app:srcCompat="@drawable/ic_add_white_24dp" />

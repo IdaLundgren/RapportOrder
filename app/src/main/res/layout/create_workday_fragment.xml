@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="Fyll i alla fält för att skapa en arbetsdag."
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -138,17 +139,12 @@
                     android:drawableLeft="@drawable/ic_comment_black_24dp"
                     android:drawableStart="@drawable/ic_comment_black_24dp"
                     android:drawablePadding="10dp"
-                    android:hint="Kommentar"
+                    android:hint="Aktivitet"
                     android:singleLine="true"
                     />
 
             </android.support.design.widget.TextInputLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="Extra utrustning?"
-                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,6 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     >
                     <RadioButton
                         android:id="@+id/radioButton_yes"
@@ -189,9 +186,11 @@
                     android:id="@+id/edittx_extra_in_minutes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:hint="Extra utrustning i minuter"
+                    android:hint="Extra utrustning i timmar"
                     android:inputType="textCapWords"
+                    android:drawableLeft="@drawable/ic_access_time_for_workday"
+                    android:drawableStart="@drawable/ic_access_time_for_workday"
+                    android:drawablePadding="10dp"
                     />
 
             </android.support.design.widget.TextInputLayout>

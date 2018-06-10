@@ -5,4 +5,9 @@
         android:id="@+id/approv"
         android:title="Godkänn order"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/delete"
+        android:title="Ta bort order"
+        app:showAsAction="never"
+        />
 </menu>

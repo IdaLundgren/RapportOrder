@@ -59,7 +59,7 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
     private LayoutInflater mLayoutInflater;
     private RecyclerView mRecyclerView;
     private RestManager mRestManager;
-    private Toolbar mToolbar;
+    private android.support.v7.widget.Toolbar mToolbar;
 
     private List<OrderRow> mOrderRowsList;
 
@@ -84,7 +84,8 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         setUpViewAndAdapter(view);
         mOrder = new Order();
         mUser = new User();
-
+        mToolbar = view.findViewById(R.id.toolbar_order_list_detail);
+        setMenu();
         getBundleParcable();
         toggleCustomerInfo(view);
         setUI(mOrder);
@@ -128,6 +129,10 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
             mOrder = bundle.getParcelable(KEY_ORDER);
             mUser = bundle.getParcelable("user");
         }
+    }
+    private void setMenu(){
+        ((BaseActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
     }
     private void toggleCustomerInfo(View view){
         mTextViewCustomerName = view.findViewById(R.id.txtview_order_list_customer_header);
@@ -186,6 +191,18 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        if(mUser.getId() == mOrder.getUser().getId()) {
+            inflater.inflate(R.menu.driver_menu, menu);
+            super.onCreateOptionsMenu(menu, inflater);
+        }else if( mUser.getRole().equals("admin") || mUser.getRole().equals("editor")){
+            inflater.inflate(R.menu.admin_supervisor_menu, menu);
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    }
+
+    @Override
     public void onClick(int position) {
         OrderRow selectedOrderRow = mStartListDetailAdapter.getSelectedOrderrow(position);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -196,6 +213,7 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         TextView dialogDate = mView.findViewById(R.id.txtview_dialog_date);
         TextView dialogDriver = mView.findViewById(R.id.txtview_dialog_driver);
         TextView dialogComment = mView.findViewById(R.id.txtview_dialog_comment);
+        TextView nrOfHours = mView.findViewById(R.id.txtview_nr_hours);
 
         //Dialog
         dialogCustomerName.setText(selectedOrderRow.getOrder().getCustomer_name());
@@ -203,6 +221,7 @@ public class StartDetailFragment extends Fragment implements ItemClickListener {
         dialogDate.setText(selectedOrderRow.getStartdate());
         dialogDriver.setText(selectedOrderRow.getUser().getFirstname() + " " + selectedOrderRow.getUser().getLastname());
         dialogComment.setText(selectedOrderRow.getComment());
+        nrOfHours.setText(String.valueOf(selectedOrderRow.getTotalWorkHours()));
         builder.setView(mView);
         AlertDialog dialog = builder.create();
         dialog.show();

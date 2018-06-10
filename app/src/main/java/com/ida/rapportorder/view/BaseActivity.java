@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -29,7 +30,6 @@ public class BaseActivity extends AppCompatActivity {
         mUserLoggedIn = new User();
         mUserLoggedIn = getIntent().getExtras().getParcelable(KEY_USER);
         bottomNav.setOnNavigationItemSelectedListener(mNavigationItemSelectedListener);
-
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_USER, mUserLoggedIn);
         Fragment startfragment = new StartFragment();
@@ -50,7 +50,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
     }
-
     private BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

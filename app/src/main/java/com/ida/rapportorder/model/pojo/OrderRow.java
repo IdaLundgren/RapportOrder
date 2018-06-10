@@ -177,6 +177,30 @@ public class OrderRow implements Parcelable{
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         return dayOfWeek - 1;
     }
+    public long getTotalWorkHours(){
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            Date start = format.parse(starttime);
+            Date end = format.parse(endtime);
+            long diff = end.getTime() - start.getTime();
+            long diffHours = diff/(60 * 60 * 1000)% 24;
+            diffHours = lunchBreakTotal(diffHours);
+
+            return diffHours;
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    private long lunchBreakTotal(long diff){
+        if(lunch_break_in_min != 0){
+            long breakLunch = lunch_break_in_min / 60;
+            diff = diff - breakLunch;
+
+            return diff;
+        }
+        return diff;
+    }
     @Override
     public int describeContents() {
         return 0;

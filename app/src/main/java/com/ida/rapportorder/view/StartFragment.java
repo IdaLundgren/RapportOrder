@@ -71,10 +71,14 @@ public class StartFragment extends Fragment implements ItemClickListener {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", mUser);
+                Fragment createOrderFragment = new CreateOrderFragment();
+                createOrderFragment.setArguments(bundle);
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.base_container, new CreateOrderFragment())
+                        .replace(R.id.base_container, createOrderFragment)
                         .commit();
             }
         });

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -50,6 +51,7 @@ public class CreateOrderFragment extends Fragment {
     private BetterSpinner mBetterSpinner;
     private Toolbar mToolbar;
     private User mUserLoggedIn;
+    private Vehicle mVehicleSelected;
 
     //Const
     private static final String KEY_USER = "user";
@@ -67,6 +69,7 @@ public class CreateOrderFragment extends Fragment {
         mBetterSpinner = view.findViewById(R.id.vehicle_dropdown_betterspinner);
         mVehiclesList = new ArrayList<>();
         mRestManager = new RestManager();
+        mVehicleSelected = new Vehicle();
         mToolbar = view.findViewById(R.id.toolbar_create_order);
 
         mUserLoggedIn = new User();
@@ -115,6 +118,12 @@ public class CreateOrderFragment extends Fragment {
         ArrayAdapter<Vehicle> arrayAdapter = new ArrayAdapter<Vehicle>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mVehiclesList);
         mBetterSpinner.setAdapter(arrayAdapter);
 
+        mBetterSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mVehicleSelected = mVehiclesList.get(position);
+            }
+        });
         //Knappar
         mButtonAddOrder = view.findViewById(R.id.btn_create_order);
         mButtonAddOrder.setOnClickListener(new View.OnClickListener() {
@@ -129,26 +138,11 @@ public class CreateOrderFragment extends Fragment {
                 String price_per_hour = mTextViewPrice_Per_hour.getText().toString();
                 String price_per_extra = mTextViewPrice_Per_Extra.getText().toString();
                 String customer_name = mTextViewCustomerName.getText().toString();
-                String va = mBetterSpinner.getText().toString();
-                String vid = "";
-                if(!va.isEmpty()){
-                    String[] splited = va.split("\\s+");
-                    if(splited.length == 3){
-                        va = splited[2];
-                    }else{
-                        va = splited[1];
-                    }
-                    for(Vehicle vehicle : mVehiclesList){
-                        if(vehicle.getVehicle_nr().equals(va)){
-                            vid = String.valueOf(vehicle.getId());
-                        }
-                    }
-                }
 
                 if(created_at.isEmpty() || start_date.isEmpty()){
                     Toast.makeText(getContext(), "Du måste fylla i alla fält", Toast.LENGTH_LONG).show();
                 }else {
-                    Call<Result> call = mRestManager.getOrderFromApi().insertOrder(created_at, uid,message_to_employer,price_per_hour,price_per_extra,customer_name,vid,start_date);
+                    Call<Result> call = mRestManager.getOrderFromApi().insertOrder(created_at, uid,message_to_employer,price_per_hour,price_per_extra,customer_name,String.valueOf(mVehicleSelected.getId()),start_date);
 
                     call.enqueue(new Callback<Result>() {
                         @Override
